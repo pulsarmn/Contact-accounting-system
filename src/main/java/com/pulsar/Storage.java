@@ -1,5 +1,9 @@
 package com.pulsar;
 
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.Optional;
+
 public class Storage {
 
     private Contact[] contacts;
@@ -41,6 +45,14 @@ public class Storage {
                 break;
             }
         }
+    }
+
+    public Optional<String> findContact(String name) {
+        return Arrays.stream(contacts)
+                .filter(Objects::nonNull)
+                .filter(contact -> contact.getName().equals(name))
+                .map(Contact::getPhoneNumber)
+                .findFirst();
     }
 
     private int findFreeIndex() {
