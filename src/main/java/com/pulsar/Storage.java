@@ -65,6 +65,10 @@ public class Storage {
         }
     }
 
+    public boolean hasFreeSpace() {
+        return size < contacts.length;
+    }
+
     private int findFreeIndex() {
         int index = INDEX_OCCUPIED;
 
