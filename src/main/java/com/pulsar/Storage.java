@@ -33,6 +33,16 @@ public class Storage {
         return false;
     }
 
+    public void delete(String name) {
+        for (int i = 0; i < contacts.length; i++) {
+            Contact contact = contacts[i];
+            if (contact != null && contact.getName().equals(name)) {
+                contacts[i] = null;
+                break;
+            }
+        }
+    }
+
     private int findFreeIndex() {
         int index = INDEX_OCCUPIED;
 
