@@ -55,6 +55,16 @@ public class Storage {
                 .findFirst();
     }
 
+    public void print() {
+        int number = 1;
+        for (Contact contact : contacts) {
+            if (contact != null) {
+                System.out.printf("%s. %s%n", number, contact);
+                number++;
+            }
+        }
+    }
+
     private int findFreeIndex() {
         int index = INDEX_OCCUPIED;
 
