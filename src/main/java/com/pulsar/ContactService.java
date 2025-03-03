@@ -52,4 +52,8 @@ public class ContactService {
             }
         }
     }
+
+    public void viewContacts() {
+        storage.print();
+    }
 }
