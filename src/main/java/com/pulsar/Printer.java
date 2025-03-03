@@ -32,4 +32,8 @@ public final class Printer {
     public static void success(String message) {
         System.out.println(BOLD_GREEN + message + RESET);
     }
+
+    public static void print(String message) {
+        System.out.print(message);
+    }
 }
