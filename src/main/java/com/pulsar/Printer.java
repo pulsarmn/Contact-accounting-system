@@ -3,6 +3,7 @@ package com.pulsar;
 public final class Printer {
 
     private static final String BOLD_RED = "\033[1;31m";
+    private static final String BOLD_GREEN = "\033[1;32m";
     private static final String RESET = "\033[0m";
 
     private Printer() {}
@@ -25,6 +26,10 @@ public final class Printer {
     }
 
     public static void error(String message) {
-        System.out.printf((BOLD_RED + "%s" + RESET + "%n"), message);
+        System.out.println(BOLD_RED + message + RESET);
+    }
+
+    public static void success(String message) {
+        System.out.println(BOLD_GREEN + message + RESET);
     }
 }
