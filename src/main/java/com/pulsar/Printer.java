@@ -19,6 +19,11 @@ public final class Printer {
         System.out.print("> ");
     }
 
+    public static void inputError() {
+        String message = "Некорректный ввод! Попробуйте ещё раз!";
+        error(message);
+    }
+
     public static void error(String message) {
         System.out.printf((BOLD_RED + "%s" + RESET + "%n"), message);
     }
