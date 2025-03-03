@@ -18,4 +18,8 @@ public final class Printer {
     public static void inputRequest() {
         System.out.print("> ");
     }
+
+    public static void error(String message) {
+        System.out.printf((BOLD_RED + "%s" + RESET + "%n"), message);
+    }
 }
