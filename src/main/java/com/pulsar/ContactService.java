@@ -1,5 +1,6 @@
 package com.pulsar;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 public class ContactService {
@@ -20,5 +21,35 @@ public class ContactService {
         this.terminal = terminal;
         this.storage = storage;
         this.validator = new Validator();
+    }
+
+    public void addContact() {
+        while (true) {
+            if (storage.hasFreeSpace()) {
+                Printer.print("Введите имя: ");
+                String name = terminal.nextLine();
+
+                Printer.print("Введите номер телефона: ");
+                String phoneNumber = terminal.nextLine();
+
+                try {
+                    validator.validateName(name);
+                    validator.validatePhoneNumber(phoneNumber);
+                }catch (IllegalArgumentException e) {
+                    Printer.error(e.getMessage());
+                    continue;
+                }
+
+                boolean added = storage.add(name, phoneNumber);
+                if (added) {
+                    Printer.success("Запись успешно добавлена!");
+                }else {
+                    Printer.error("Запись не добавлена!");
+                }
+                break;
+            }else {
+                Printer.error("Хранилище переполнено!");
+            }
+        }
     }
 }
