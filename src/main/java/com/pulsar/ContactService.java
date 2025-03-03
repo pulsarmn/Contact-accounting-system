@@ -35,7 +35,7 @@ public class ContactService {
                 try {
                     validator.validateName(name);
                     validator.validatePhoneNumber(phoneNumber);
-                }catch (IllegalArgumentException e) {
+                } catch (IllegalArgumentException e) {
                     Printer.error(e.getMessage());
                     continue;
                 }
@@ -43,13 +43,13 @@ public class ContactService {
                 boolean added = storage.add(name, phoneNumber);
                 if (added) {
                     Printer.success("Запись успешно добавлена!");
-                }else {
+                } else {
                     Printer.error("Запись не добавлена!");
                 }
-                break;
-            }else {
+            } else {
                 Printer.error("Хранилище переполнено!");
             }
+            break;
         }
     }
 
@@ -65,7 +65,7 @@ public class ContactService {
 
         if (contact.isPresent()) {
             Printer.success("Номер контакта %s: %s".formatted(name, contact.get()));
-        }else {
+        } else {
             Printer.error("Номер для контакта %s не найден".formatted(name));
         }
     }
@@ -76,7 +76,7 @@ public class ContactService {
 
         try {
             storage.delete(name);
-        }catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             Printer.error(e.getMessage());
         }
     }
