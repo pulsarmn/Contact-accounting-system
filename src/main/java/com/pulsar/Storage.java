@@ -10,10 +10,6 @@ public class Storage {
     private int size;
     private static final int INDEX_OCCUPIED = -1;
 
-    public Storage() {
-        this(100);
-    }
-
     public Storage(int size) {
         if (size < 1) {
             throw new IllegalArgumentException("The size must be greater then 0");
