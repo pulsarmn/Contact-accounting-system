@@ -39,9 +39,11 @@ public class Storage {
             if (contact != null && contact.name().equalsIgnoreCase(name)) {
                 fillEmptySpace(i);
                 size--;
-                break;
+                Printer.success("Контакт %s успешно удалён".formatted(name));
+                return;
             }
         }
+        Printer.error("Контакт %s не найден".formatted(name));
     }
 
     public Optional<String> findContact(String name) {

@@ -71,7 +71,7 @@ public class ContactService {
     }
 
     public void deleteContact() {
-        Printer.print("Введите имя контакты для удаления: ");
+        Printer.print("Введите имя контакта для удаления: ");
         String name = terminal.nextLine();
 
         try {
