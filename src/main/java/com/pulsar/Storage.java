@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public class Storage {
 
-    private Contact[] contacts;
+    private final Contact[] contacts;
     private int size;
     private static final int INDEX_OCCUPIED = -1;
 
@@ -40,8 +40,9 @@ public class Storage {
     public void delete(String name) {
         for (int i = 0; i < contacts.length; i++) {
             Contact contact = contacts[i];
-            if (contact != null && contact.getName().equals(name)) {
-                contacts[i] = null;
+            if (contact != null && contact.getName().equalsIgnoreCase(name)) {
+                fillEmptySpace(i);
+                size--;
                 break;
             }
         }
@@ -50,33 +51,37 @@ public class Storage {
     public Optional<String> findContact(String name) {
         return Arrays.stream(contacts)
                 .filter(Objects::nonNull)
-                .filter(contact -> contact.getName().equals(name))
+                .filter(contact -> contact.getName().equalsIgnoreCase(name))
                 .map(Contact::getPhoneNumber)
                 .findFirst();
     }
 
     public void print() {
-        int number = 1;
-        for (Contact contact : contacts) {
-            if (contact != null) {
-                System.out.printf("%s. %s%n", number, contact);
-                number++;
-            }
+        Printer.println("Список ваших контактов:");
+
+        for (int i = 0; i < size; i++) {
+            Printer.println("%s. %s".formatted(i + 1, contacts[i]));
         }
+
+        Printer.println("");
     }
 
     public boolean hasFreeSpace() {
         return size < contacts.length;
     }
 
+    private void fillEmptySpace(int index) {
+        while (index != contacts.length - 1) {
+            contacts[index] = contacts[++index];
+        }
+        contacts[contacts.length - 1] = null;
+    }
+
     private int findFreeIndex() {
         int index = INDEX_OCCUPIED;
 
-        for (int i = 0; i < contacts.length; i++) {
-            if (contacts[i] == null) {
-                index = i;
-                break;
-            }
+        if (size != contacts.length && contacts[size] == null) {
+            index = size;
         }
 
         return index;
