@@ -14,4 +14,8 @@ public final class Printer {
         System.out.println("4. Удалить контакт");
         System.out.println("5. Выйти");
     }
+
+    public static void inputRequest() {
+        System.out.print("> ");
+    }
 }
