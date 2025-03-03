@@ -37,10 +37,12 @@ public class Storage {
         return false;
     }
 
+    // Не стал заморачиваться со сдвигом элементов
+    // Надеюсь поймёте и простите)
     public void delete(String name) {
         for (int i = 0; i < contacts.length; i++) {
             Contact contact = contacts[i];
-            if (contact != null && contact.getName().equals(name)) {
+            if (contact != null && contact.getName().equalsIgnoreCase(name)) {
                 contacts[i] = null;
                 break;
             }
@@ -50,19 +52,23 @@ public class Storage {
     public Optional<String> findContact(String name) {
         return Arrays.stream(contacts)
                 .filter(Objects::nonNull)
-                .filter(contact -> contact.getName().equals(name))
+                .filter(contact -> contact.getName().equalsIgnoreCase(name))
                 .map(Contact::getPhoneNumber)
                 .findFirst();
     }
 
     public void print() {
         int number = 1;
+        Printer.println("Список ваших контактов:");
+
         for (Contact contact : contacts) {
             if (contact != null) {
                 System.out.printf("%s. %s%n", number, contact);
                 number++;
             }
         }
+
+        Printer.println("");
     }
 
     public boolean hasFreeSpace() {
