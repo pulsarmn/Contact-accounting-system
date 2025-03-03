@@ -69,4 +69,15 @@ public class ContactService {
             Printer.error("Номер для контакта %s не найден".formatted(name));
         }
     }
+
+    public void deleteContact() {
+        Printer.print("Введите имя контакты для удаления: ");
+        String name = terminal.nextLine();
+
+        try {
+            storage.delete(name);
+        }catch (IllegalArgumentException e) {
+            Printer.error(e.getMessage());
+        }
+    }
 }
