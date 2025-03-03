@@ -10,10 +10,6 @@ public class Storage {
     private int size;
     private static final int INDEX_OCCUPIED = -1;
 
-    public Storage() {
-        this(100);
-    }
-
     public Storage(int size) {
         if (size < 1) {
             throw new IllegalArgumentException("The size must be greater then 0");
@@ -40,19 +36,21 @@ public class Storage {
     public void delete(String name) {
         for (int i = 0; i < contacts.length; i++) {
             Contact contact = contacts[i];
-            if (contact != null && contact.getName().equalsIgnoreCase(name)) {
+            if (contact != null && contact.name().equalsIgnoreCase(name)) {
                 fillEmptySpace(i);
                 size--;
-                break;
+                Printer.success("Контакт %s успешно удалён".formatted(name));
+                return;
             }
         }
+        Printer.error("Контакт %s не найден".formatted(name));
     }
 
     public Optional<String> findContact(String name) {
         return Arrays.stream(contacts)
                 .filter(Objects::nonNull)
-                .filter(contact -> contact.getName().equalsIgnoreCase(name))
-                .map(Contact::getPhoneNumber)
+                .filter(contact -> contact.name().equalsIgnoreCase(name))
+                .map(Contact::phoneNumber)
                 .findFirst();
     }
 
