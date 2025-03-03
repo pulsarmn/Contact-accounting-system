@@ -36,7 +36,7 @@ public class Storage {
     public void delete(String name) {
         for (int i = 0; i < contacts.length; i++) {
             Contact contact = contacts[i];
-            if (contact != null && contact.getName().equalsIgnoreCase(name)) {
+            if (contact != null && contact.name().equalsIgnoreCase(name)) {
                 fillEmptySpace(i);
                 size--;
                 break;
@@ -45,11 +45,7 @@ public class Storage {
     }
 
     public Optional<String> findContact(String name) {
-        return Arrays.stream(contacts)
-                .filter(Objects::nonNull)
-                .filter(contact -> contact.getName().equalsIgnoreCase(name))
-                .map(Contact::getPhoneNumber)
-                .findFirst();
+        return Arrays.stream(contacts).filter(Objects::nonNull).filter(contact -> contact.name().equalsIgnoreCase(name)).map(Contact::phoneNumber).findFirst();
     }
 
     public void print() {
