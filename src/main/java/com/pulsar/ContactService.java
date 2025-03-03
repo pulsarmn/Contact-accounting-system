@@ -56,4 +56,17 @@ public class ContactService {
     public void viewContacts() {
         storage.print();
     }
+
+    public void findContact() {
+        Printer.print("Введите имя контакта для поиска: ");
+
+        String name = terminal.nextLine();
+        Optional<String> contact = storage.findContact(name);
+
+        if (contact.isPresent()) {
+            Printer.success("Номер контакта %s: %s".formatted(name, contact.get()));
+        }else {
+            Printer.error("Номер для контакта %s не найден".formatted(name));
+        }
+    }
 }
