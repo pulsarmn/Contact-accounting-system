@@ -4,9 +4,8 @@ import java.util.Scanner;
 
 public class Application {
 
-    private final Storage storage;
-    private final Validator validator;
     private final Scanner terminal;
+    private final ContactService contactService;
 
     private static final int ADD_CONTACT = 1;
     private static final int VIEW_CONTACTS = 2;
@@ -15,16 +14,38 @@ public class Application {
     private static final int EXIT = 5;
 
     public Application() {
-        this(new Storage());
-    }
-
-    public Application(int storageSize) {
-        this(new Storage(storageSize));
-    }
-
-    public Application(Storage storage) {
-        this.storage = storage;
-        this.validator = new Validator();
         this.terminal = new Scanner(System.in);
+        this.contactService = new ContactService(terminal);
+    }
+
+    public Application(ContactService contactService) {
+        this.terminal = new Scanner(System.in);
+        this.contactService = contactService;
+    }
+
+    public void start() {
+        while (true) {
+            Printer.mainMenu();
+            Printer.inputRequest();
+
+            String userInput = terminal.nextLine();
+            int number;
+
+            try {
+                number = Integer.parseInt(userInput);
+            }catch (NumberFormatException e) {
+                Printer.inputError();
+                continue;
+            }
+
+            switch (number) {
+                case ADD_CONTACT -> contactService.addContact();
+                case VIEW_CONTACTS -> contactService.viewContacts();
+                case FIND_CONTACT -> contactService.findContact();
+                case DELETE_CONTACT -> contactService.deleteContact();
+                case EXIT -> System.exit(0);
+                default -> Printer.inputError();
+            }
+        }
     }
 }
