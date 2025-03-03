@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public class Storage {
 
-    private Contact[] contacts;
+    private final Contact[] contacts;
     private int size;
     private static final int INDEX_OCCUPIED = -1;
 
@@ -37,13 +37,12 @@ public class Storage {
         return false;
     }
 
-    // Не стал заморачиваться со сдвигом элементов
-    // Надеюсь поймёте и простите)
     public void delete(String name) {
         for (int i = 0; i < contacts.length; i++) {
             Contact contact = contacts[i];
             if (contact != null && contact.getName().equalsIgnoreCase(name)) {
-                contacts[i] = null;
+                fillEmptySpace(i);
+                size--;
                 break;
             }
         }
@@ -58,14 +57,10 @@ public class Storage {
     }
 
     public void print() {
-        int number = 1;
         Printer.println("Список ваших контактов:");
 
-        for (Contact contact : contacts) {
-            if (contact != null) {
-                System.out.printf("%s. %s%n", number, contact);
-                number++;
-            }
+        for (int i = 0; i < size; i++) {
+            Printer.println("%s. %s".formatted(i + 1, contacts[i]));
         }
 
         Printer.println("");
@@ -75,14 +70,18 @@ public class Storage {
         return size < contacts.length;
     }
 
+    private void fillEmptySpace(int index) {
+        while (index != contacts.length - 1) {
+            contacts[index] = contacts[++index];
+        }
+        contacts[contacts.length - 1] = null;
+    }
+
     private int findFreeIndex() {
         int index = INDEX_OCCUPIED;
 
-        for (int i = 0; i < contacts.length; i++) {
-            if (contacts[i] == null) {
-                index = i;
-                break;
-            }
+        if (size != contacts.length && contacts[size] == null) {
+            index = size;
         }
 
         return index;
